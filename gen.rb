@@ -28,7 +28,7 @@ how_many.times do |i|
 
   #start filling it with shapes
   svg.build do   
-    #solid backtround 
+    #solid background 
     rect x: 0, y: 0, width: width, height: height, fill: background
     
     #loop through the rows
@@ -52,6 +52,7 @@ how_many.times do |i|
   #save the svg
   svg.save name
   
+  #helpful output
   puts "Rendering & saving #{name} files"
   
   #create a lo-res and high-res JPG from the SVG named after the option number
