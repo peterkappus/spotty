@@ -2,11 +2,10 @@
 
 require 'victor'
 
-#Robin's palette
+#Add your palette colours here"
 colors = %w"#1B1725 #B8C5D6 #503D3F #481620 #324A5F"
 
 background = "#fff"
-width = 5000.00
 
 #change these depending on aspect ratio (e.g. square, or 2:1 rectangle)
 cols = 20
@@ -15,13 +14,20 @@ rows = 10
 #how many options do you want? (default: 3)
 how_many = 3
 
+#speed up debugging if you don't need a high-res file
+create_high_res = true
+
 
 #-----careful down here....
+width = 1000.0 #note the extra .0 to make this a float and prevent rounding errors
 height = width * rows / cols
 spacing_count = cols - 1
 diam = width / (cols + spacing_count) #works because space = diameter
-spacing = diam #spacing equal to diameter
-rad = diam/2
+horiz_space = diam #spacing equal to diameter
+
+#remaining height / number of space rows
+vert_space = (height - (rows * diam)) / (rows - 1) 
+rad = diam / 2
 
 #make several versions to choose from
 how_many.times do |i|
@@ -40,9 +46,9 @@ how_many.times do |i|
       #loop through the columns
       cols.times do |col|
         #center X is single radius, + current column * (circle diam + circle spacing)
-        x = rad + (col * (diam + spacing))
+        x = rad + (col * (diam + horiz_space))
         #ditto for center Y
-        y = rad + (row * (diam + spacing))
+        y = rad + (row * (diam + vert_space))
         #now create the circle using a random color from our palette
         circle cx: x, cy: y, r: rad, fill: colors.sample
       end
@@ -60,5 +66,5 @@ how_many.times do |i|
   
   #create a lo-res and high-res JPG from the SVG named after the option number
   `rsvg-convert -w 1000 #{name}.svg > #{name}.jpg`
-  `rsvg-convert -w 10000 #{name}.svg > #{name}_hires.jpg`
+  `rsvg-convert -w 10000 #{name}.svg > #{name}_hires.jpg` if create_high_res
 end
