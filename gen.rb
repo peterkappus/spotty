@@ -15,6 +15,8 @@ opts = Trollop::options do
     opt :rows , "Number of rows", :default=>10
     opt :width, "Canvas width in cm", :default=>100
     opt :height, "Canvas height (aka length) in cm", :default=>100
+    opt :order, "Order number (used as filename prefix)", :default=>1000
+    
   end
 
 #Add your palette colours here"
@@ -76,7 +78,7 @@ how_many.times do |i|
   end
 
   #construct a name using the current iteration counter (e.g. "option_1")
-  name = "option_#{i+1}"
+  name = "#{opts[:order]}_option_#{i+1}"
   
   #save the svg
   svg.save name
