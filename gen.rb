@@ -1,22 +1,38 @@
 #check out the readme, yo.
 
 require 'victor'
+require 'trollop'
+
+opts = Trollop::options do
+    #opt :monkey, "Use monkey mode"                    # flag --monkey, default false
+    #opt :name, "Monkey name", :type => :string        # string --name <s>, default nil
+    #opt :num_limbs, "Number of limbs", :default => 4  # integer --num-limbs <i>, default to 4
+
+    opt :palette, "colour string with hex values separated by space", :default=>"#1B1725 #B8C5D6 #503D3F #481620 #324A5F", :type=>:string
+    opt :debug, "Debug - produce only one lo-res file each time"
+    #opt :size, "height x width (e.g. 500x200)"    
+    opt :columns, "Number of columns", :default=>10
+    opt :rows , "Number of rows", :default=>10
+  end
 
 #Add your palette colours here"
-colors = %w"#1B1725 #B8C5D6 #503D3F #481620 #324A5F"
+colors = opts[:palette].split("\s")
 
 background = "#fff"
 
 #change these depending on aspect ratio (e.g. square, or 2:1 rectangle)
-cols = 20
-rows = 10
+cols = opts[:columns]
+rows = opts[:rows]
 
-#how many options do you want? (default: 3)
-how_many = 3
-
-#speed up debugging if you don't need a high-res file
-create_high_res = true
-
+if(opts[:debug])
+  #how many options do you want? (default: 3)
+  how_many = 1
+  #speed up debugging if you don't need a high-res file
+  create_high_res = false
+else
+  how_many = 3
+  create_high_res = true
+end
 
 #-----careful down here....
 width = 1000.0 #note the extra .0 to make this a float and prevent rounding errors
