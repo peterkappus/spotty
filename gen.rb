@@ -13,6 +13,8 @@ opts = Trollop::options do
     #opt :size, "height x width (e.g. 500x200)"    
     opt :columns, "Number of columns", :default=>10
     opt :rows , "Number of rows", :default=>10
+    opt :width, "Canvas width in cm", :default=>100
+    opt :height, "Canvas height (aka length) in cm", :default=>100
   end
 
 #Add your palette colours here"
@@ -35,8 +37,10 @@ else
 end
 
 #-----careful down here....
-width = 1000.0 #note the extra .0 to make this a float and prevent rounding errors
-height = width * rows / cols
+width = opts[:width].to_f #float! to avoid rounding errors
+height = opts[:height].to_f #float! to avoid rounding errors
+
+#height = width * rows / cols
 spacing_count = cols - 1
 diam = width / (cols + spacing_count) #works because space = diameter
 horiz_space = diam #spacing equal to diameter
