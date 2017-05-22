@@ -16,7 +16,7 @@ opts = Trollop::options do
     opt :rows , "Number of rows of spots", :default=>10
     opt :width, "Canvas width in cm", :default=>100
     opt :height, "Canvas height in cm", :default=>100
-    opt :order, "Order number (used as filename prefix)", :default=>1000
+    opt :order, "Order number/name (used as filename prefix)", :default=>"1000", :type=>:string 
     
   end
 
