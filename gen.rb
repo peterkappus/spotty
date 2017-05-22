@@ -1,26 +1,48 @@
 #check out the readme, yo.
 
 require 'victor'
+require 'trollop'
+
+opts = Trollop::options do
+    #opt :monkey, "Use monkey mode"                    # flag --monkey, default false
+    #opt :name, "Monkey name", :type => :string        # string --name <s>, default nil
+    #opt :num_limbs, "Number of limbs", :default => 4  # integer --num-limbs <i>, default to 4
+
+    opt :palette, "colour string with hex values separated by space", :default=>"#1B1725 #B8C5D6 #503D3F #481620 #324A5F", :type=>:string
+    opt :debug, "Debug - produce only one lo-res file each time"
+    #opt :size, "height x width (e.g. 500x200)"    
+    opt :columns, "Number of columns", :default=>10
+    opt :rows , "Number of rows", :default=>10
+    opt :width, "Canvas width in cm", :default=>100
+    opt :height, "Canvas height (aka length) in cm", :default=>100
+    opt :order, "Order number (used as filename prefix)", :default=>1000
+    
+  end
 
 #Add your palette colours here"
-colors = %w"#1B1725 #B8C5D6 #503D3F #481620 #324A5F"
+colors = opts[:palette].split("\s")
 
 background = "#fff"
 
 #change these depending on aspect ratio (e.g. square, or 2:1 rectangle)
-cols = 20
-rows = 10
+cols = opts[:columns]
+rows = opts[:rows]
 
-#how many options do you want? (default: 3)
-how_many = 3
-
-#speed up debugging if you don't need a high-res file
-create_high_res = true
-
+if(opts[:debug])
+  #how many options do you want? (default: 3)
+  how_many = 1
+  #speed up debugging if you don't need a high-res file
+  create_high_res = false
+else
+  how_many = 3
+  create_high_res = true
+end
 
 #-----careful down here....
-width = 1000.0 #note the extra .0 to make this a float and prevent rounding errors
-height = width * rows / cols
+width = opts[:width].to_f #float! to avoid rounding errors
+height = opts[:height].to_f #float! to avoid rounding errors
+
+#height = width * rows / cols
 spacing_count = cols - 1
 diam = width / (cols + spacing_count) #works because space = diameter
 horiz_space = diam #spacing equal to diameter
@@ -56,7 +78,7 @@ how_many.times do |i|
   end
 
   #construct a name using the current iteration counter (e.g. "option_1")
-  name = "option_#{i+1}"
+  name = "#{opts[:order]}_option_#{i+1}"
   
   #save the svg
   svg.save name
