@@ -10,13 +10,12 @@ opts = Trollop::options do
     #opt :name, "Monkey name", :type => :string        # string --name <s>, default nil
     #opt :num_limbs, "Number of limbs", :default => 4  # integer --num-limbs <i>, default to 4
 
-    opt :palette, "colour string with hex values separated by space", :default=>"#1B1725 #B8C5D6 #503D3F #481620 #324A5F", :type=>:string
+    opt :palette, "String of colour hex values separated by space", :default=>"#1B1725 #B8C5D6 #503D3F #481620 #324A5F", :type=>:string
     opt :debug, "Debug - produce only one lo-res file each time"
-    #opt :size, "height x width (e.g. 500x200)"    
-    opt :columns, "Number of columns", :default=>10
-    opt :rows , "Number of rows", :default=>10
+    opt :columns, "Number of columns of spots", :default=>10
+    opt :rows , "Number of rows of spots", :default=>10
     opt :width, "Canvas width in cm", :default=>100
-    opt :height, "Canvas height (aka length) in cm", :default=>100
+    opt :height, "Canvas height in cm", :default=>100
     opt :order, "Order number (used as filename prefix)", :default=>1000
     
   end
