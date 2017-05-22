@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 #check out the readme, yo.
 
 require 'victor'
